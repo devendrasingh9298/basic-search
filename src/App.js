@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
 
-function App() {
+export default function App() {
+  const [name, setName] = useState("");
+  const [master, setMaster] = useState(["Newton","Newton School","Node","Mongoose","Angular","Netflix","Apple","School","React","Preact","Meta"]);
+  const [data, setData] = useState(master);
+ 
+
+  useEffect(() => {
+    let tempData = master.filter((item) => {
+      return item.toLowerCase().includes(name.toLowerCase());
+    });
+    setData(tempData);
+  }, [name]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form>
+        <input
+          id="search-input"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </form>
+      <p>Results</p>
+          
+      {data.map((item) => ( 
+         <li>{item}</li> 
+       ))}
     </div>
   );
 }
-
-export default App;
